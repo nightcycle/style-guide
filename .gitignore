@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# test
+out
+foreman.toml
+sourcemap.json
+wally.toml
+style.css
+reference.luau
+pseudo-enum.toml
+default.project.json
+Packages
