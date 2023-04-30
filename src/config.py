@@ -2,7 +2,6 @@ import os
 import toml
 import tinycss2
 import dpath
-from luau.roblox.tool import get_tool_name
 from luau.roblox.rojo import get_roblox_path_from_env_path
 from typing import TypedDict, Any, Literal
 
@@ -121,25 +120,32 @@ class StyleConfig(TypedDict):
 	loss: ColorConfig	
 
 def hsv_to_rgb(h: float, s: float, v: float) -> tuple[int, int, int]:
-    """Convert HSV to RGB."""
-    if s == 0.0:
-        return v, v, v
-    i = int(h*6.) # XXX assume int() truncates!
-    f = (h*6.)-i
-    p, q, t = v*(1.-s), v*(1.-s*f), v*(1.-s*(1.-f))
-    i %= 6
-    if i == 0:
-        return v, t, p
-    if i == 1:
-        return q, v, p
-    if i == 2:
-        return p, v, t
-    if i == 3:
-        return p, q, v
-    if i == 4:
-        return t, p, v
-    if i == 5:
-        return v, p, q
+	int_v: int = int(v)
+
+	if s == 0.0:
+		return int_v, int_v, int_v
+	i = int(h*6.) # XXX assume int() truncates!
+	f = (h*6.)-i
+	p: int = int(v*(1.-s)) 
+	q: int = int(v*(1.-s*f))
+	t: int = int(v*(1.-s*(1.-f)))
+	
+	i %= 6
+	if i == 0:
+		return int_v, t, p
+	if i == 1:
+		return q, int_v, p
+	if i == 2:
+		return p, int_v, t
+	if i == 3:
+		return p, q, int_v
+	if i == 4:
+		return t, p, int_v
+	if i == 5:
+		return int_v, p, q
+
+	raise ValueError(f"bad h,s,v: {h}, {s}, {v}")
+
 
 def rgb_to_hex(r:int, g:int, b:int):
     """Convert RGB to HEX."""
@@ -189,6 +195,8 @@ def parse_css_color_str_to_hex(text: str) -> str:
 		return rgb_to_hex(int(r*255),int(g*255),int(b*255))
 	elif text[0] == "#":
 		return text
+
+	raise ValueError(f"bad prefix: {text}")
 
 DEFAULT_STYLE_CSS = """
 .headline1 {
@@ -443,7 +451,8 @@ ENUM_REGISTRY = {
 
 def get_config() -> StyleConfig:
 	init_config: Any = {}
-	css_json = css_to_json(CONFIG_PATH)
+	untyped_css_json: Any = css_to_json(CONFIG_PATH)
+	css_json: dict = untyped_css_json
 	for path, val in dpath.search(css_json, '**', yielded=True):
 		if type(val) != dict and type(val) != list:
 			formatted_path = path.replace(".", "").replace("-", "_").replace(" ", "")
@@ -462,27 +471,25 @@ def get_config() -> StyleConfig:
 	return init_config
 
 def get_pseudo_enum_module_roblox_path() -> str:
-	pseudo_enum_tool_name = get_tool_name(FOREMAN_PSEUDO_ENUM_PATH, FOREMAN_PSEUDO_ENUM_VERSION)
-	if not os.path.exists("pseudo-enum.toml"):
-		os.system(f"{pseudo_enum_tool_name} init")
+	if os.path.exists("pseudo-enum.toml"):
 
-	pseudo_file = open("pseudo-enum.toml", "r")
-	pseudo_config = toml.loads(pseudo_file.read())
+		with open("pseudo-enum.toml", "r") as pseudo_file:
+			pseudo_config = toml.loads(pseudo_file.read())
 
-	build_path = pseudo_config["build_path"]
-	enum_config = pseudo_config["enums"]
-	for k, v in ENUM_REGISTRY.items():
-		if k in enum_config and len(enum_config[k]) != len(v):
-			raise ValueError(f"different type already defined for {k}")
+		build_path = pseudo_config["build_path"]
+		enum_config = pseudo_config["enums"]
+		for k, v in ENUM_REGISTRY.items():
+			if k in enum_config and len(enum_config[k]) != len(v):
+				raise ValueError(f"different type already defined for {k}")
 
-		enum_config[k] = v
+			enum_config[k] = v
 
-	write_file = open("pseudo-enum.toml", "w")
-	write_file.write(toml.dumps(pseudo_config))
-	write_file.close()
+		with open("pseudo-enum.toml", "w") as write_file:
+			write_file.write(toml.dumps(pseudo_config))
 
-	os.system(f"{pseudo_enum_tool_name} build")
-	return get_roblox_path_from_env_path(build_path)
+		return get_roblox_path_from_env_path(build_path)
+	
+	raise ValueError("nightcycle/pseudo-enum is required for this tool.")
 
 def init_config():
 	assert not os.path.exists(CONFIG_PATH), "style.css already exists"

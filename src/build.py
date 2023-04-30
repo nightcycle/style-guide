@@ -1,10 +1,20 @@
 from src.config import get_pseudo_enum_module_roblox_path, HEADER_WARNING, get_config, TypographyConfig, TextOverflow, CSS_TO_ROBLOX_FONT_WEIGHT, CSS_TO_ROBLOX_FONT_STYLE
-from luau.roblox.wally import require_roblox_wally_package
 from luau import indent_block
 from luau.roblox.rojo import get_roblox_path_from_env_path
-from luau.roblox import write_script
+from luau.roblox import write_script, get_package_require
 from luau.roblox.util import get_module_require
 from luau.convert import from_any
+from typing import Any
+import os
+import sys
+
+def get_package_zip_path() -> str:
+	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+	print(base_path)
+	for sub_path in os.listdir(base_path):
+		print(sub_path)
+
+	return os.path.join(base_path, "data\\Packages.zip")
 
 
 def main(build_path: str, is_dark_mode=False):
@@ -12,14 +22,15 @@ def main(build_path: str, is_dark_mode=False):
 	style_config = get_config()
 	space_config = style_config["spacing"]
 
-	wally_package_roblox_path = get_roblox_path_from_env_path("Packages")
 	pseudo_enum_ro_path = get_pseudo_enum_module_roblox_path()
 
 	min_text_size = 100000000
 
 	typography_configs: dict[str, TypographyConfig] = {}
-	for k, v in style_config.items():
-		if "font_size" in v:
+	for k, possible_v in style_config.items():
+		untyped_v: Any = possible_v
+		if "font_size" in untyped_v:
+			v: TypographyConfig = untyped_v
 			typography_configs[k] = v
 			min_text_size = min(v["font_size"], min_text_size)
 	
@@ -39,10 +50,10 @@ def main(build_path: str, is_dark_mode=False):
 		"local RunService = game:GetService(\"RunService\")",
 		"",
 		" -- Packages",
-		"local Maid = " + require_roblox_wally_package("nightcycle/maid@1.1.4", is_header=False, wally_directory_path=wally_package_roblox_path),
-		"local ColdFusion = " + require_roblox_wally_package("nightcycle/cold-fusion@7.0.0", is_header=False, wally_directory_path=wally_package_roblox_path),
-		"local CurveUtil = " + require_roblox_wally_package("nightcycle/curve-util@1.0.0", is_header=False, wally_directory_path=wally_package_roblox_path),
-		"local ServiceProxy = " + require_roblox_wally_package("nightcycle/service-proxy@1.0.0", is_header=False, wally_directory_path=wally_package_roblox_path),
+		"local Maid = " + get_package_require("Maid"),
+		"local ColdFusion = " + get_package_require("ColdFusion"),
+		"local CurveUtil = " + get_package_require("CurveUtil"),
+		"local ServiceProxy = " + get_package_require("ServiceProxy"),
 		"",
 		" -- Modules",
 		"local PseudoEnum = " + get_module_require(pseudo_enum_ro_path),
@@ -707,4 +718,4 @@ def main(build_path: str, is_dark_mode=False):
 		"return proxy"
 	]
 
-	write_script(build_path, "\n".join(contents))
+	write_script(build_path, "\n".join(contents), packages_dir_zip_file_path=get_package_zip_path())
