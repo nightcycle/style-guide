@@ -8,9 +8,9 @@ def main():
 	if sys.argv[1] == "init":
 		config.init_config()
 	elif sys.argv[1] == "build":
-		rojo_path = "default.rojo.json"
+		rojo_path = "default.project.json"
 		for arg in sys.argv:
-			if ".rojo.json" in arg:
+			if ".project.json" in arg:
 				rojo_path = arg
 
 		if "-dark" in sys.argv:
