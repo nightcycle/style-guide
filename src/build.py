@@ -17,12 +17,12 @@ def get_package_zip_path() -> str:
 	return os.path.join(base_path, "data\\Packages.zip")
 
 
-def main(build_path: str, is_dark_mode=False):
+def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 
 	style_config = get_config()
 	space_config = style_config["spacing"]
 
-	pseudo_enum_ro_path = get_pseudo_enum_module_roblox_path()
+	pseudo_enum_ro_path = get_pseudo_enum_module_roblox_path(rojo_path)
 
 	min_text_size = 100000000
 

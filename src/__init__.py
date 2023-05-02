@@ -8,13 +8,16 @@ def main():
 	if sys.argv[1] == "init":
 		config.init_config()
 	elif sys.argv[1] == "build":
-		if len(sys.argv) > 3:
-			if sys.argv[3] == "-dark":
-				build.main(sys.argv[2], True)
-			else:
-				build.main(sys.argv[2], False)
+		rojo_path = "default.rojo.json"
+		for arg in sys.argv:
+			if ".rojo.json" in arg:
+				rojo_path = arg
+
+		if "-dark" in sys.argv:
+			build.main(sys.argv[2], True, rojo_path)
 		else:
-			build.main(sys.argv[2])
+			build.main(sys.argv[2], False, rojo_path)
+
 
 # prevent from running twice
 if __name__ == '__main__':

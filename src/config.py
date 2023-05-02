@@ -470,7 +470,7 @@ def get_config() -> StyleConfig:
 
 	return init_config
 
-def get_pseudo_enum_module_roblox_path() -> str:
+def get_pseudo_enum_module_roblox_path(rojo_project_path="default.project.json") -> str:
 	if os.path.exists("pseudo-enum.toml"):
 
 		with open("pseudo-enum.toml", "r") as pseudo_file:
@@ -487,7 +487,7 @@ def get_pseudo_enum_module_roblox_path() -> str:
 		with open("pseudo-enum.toml", "w") as write_file:
 			write_file.write(toml.dumps(pseudo_config))
 
-		return get_roblox_path_from_env_path(build_path)
+		return get_roblox_path_from_env_path(build_path, rojo_project_path)
 	
 	raise ValueError("nightcycle/pseudo-enum is required for this tool.")
 
