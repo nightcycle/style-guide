@@ -347,7 +347,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			"local Scale = _Value(1)",
 			"local MinimumTextSize = _Computed(function(vSize: Vector2, scale: number): number",
 			"\treturn math.max(math.ceil(0.0075 * vSize.Y * scale), math.ceil(ABS_MIN_TEXT_SIZE*scale))",
-			"end, ViewportSize, Scale)",
+			"end, ViewportSize, Scale:Tween())",
 			"",
 			"local self: StyleGuide = setmetatable({}, Guide) :: any",
 			"self._IsAlive = true",
