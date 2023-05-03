@@ -199,91 +199,103 @@ def parse_css_color_str_to_hex(text: str) -> str:
 	raise ValueError(f"bad prefix: {text}")
 
 DEFAULT_STYLE_CSS = """
+
 .headline1 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 48px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: wrap;
 }
 
 .headline2 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 32px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: wrap;
 }
 
 .headline3 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 28px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .headline4 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 24px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .headline5 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 22px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .headline6 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 20px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .subtitle1 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 18px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .subtitle2 {
-	font-family: 'Arial';
+	font-family: 'Highway';
 	font-size: 16px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .button {
-	font-family: 'Arial';
+	font-family: 'Gotham';
 	font-size: 15px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .body1 {
-	font-family: 'Arial';
+	font-family: 'Gotham';
 	font-size: 12px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
 .body2 {
-	font-family: 'Arial';
+	font-family: 'Gotham';
 	font-size: 11px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
@@ -292,6 +304,7 @@ DEFAULT_STYLE_CSS = """
 	font-size: 9px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
@@ -300,6 +313,7 @@ DEFAULT_STYLE_CSS = """
 	font-size: 8px;
 	font-style: normal;
 	font-weight: bold;
+	text-align: center;
 	text-overflow: clip;
 }
 
@@ -310,19 +324,19 @@ DEFAULT_STYLE_CSS = """
 }
 
 .primary {
-	background-color: rgb(0, 136, 255);
+	background-color: rgb(43, 123, 255);
 }
 
 .secondary {
-	background-color: rgb(255, 187, 0);
+	background-color: rgb(255, 211, 152);
 }
 
 .tertiary {
-	background-color:rgb(104, 255, 235);
+	background-color: #00cbfc;
 }
 
 .background {
-	background-color: hsla(0.5, 0, 0.1, 1);
+	background-color:rgb(197, 220, 255);
 }
 
 .error {
@@ -330,16 +344,17 @@ DEFAULT_STYLE_CSS = """
 }
 
 .warn {
-	background-color: #ffbf00;
+	background-color: #ff930d;
 }
 
 .gain {
-	background-color: #33cc33;
+	background-color: #29c000;
 }
 
 .loss {
-	background-color: #ff0000;
+	background-color: #f30025;
 }
+
 """
 
 ENUM_REGISTRY = {
