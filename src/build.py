@@ -344,7 +344,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			")",
 			# "local MinTextScale = _Value(MIN_TEXT_SCALE)",
 			"local MinTextSize = _Computed(function(vSize: Vector2): number",
-			"\treturn math.max(math.ceil(0.015 * vSize.Y), ABS_MIN_TEXT_SIZE)",
+			"\treturn math.max(math.ceil(0.0075 * vSize.Y), ABS_MIN_TEXT_SIZE)",
 			"end, ViewportSize)",
 			"local MinimumTextSizeTween = MinTextSize:Tween()",
 			"",
