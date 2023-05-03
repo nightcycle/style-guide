@@ -459,7 +459,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			] + indent_block([
 				"local state = pseudo :: any",
 				"",
-				"if state.Get == nil then",
+				"if type(state) == \"string\" then",
 				"\treturn options[state]",
 				"else",
 				] + indent_block([
@@ -706,16 +706,18 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			]) + [
 			"end",
 			"",
-			"local proxy = ServiceProxy(function()",
-			"\treturn currentGuide or Guide",
-			"end)",
-			"",
 			"function Guide.init(maid: Maid)",
-			"\tmaid:GiveTask(Guide.new())",
-			"\treturn nil",
+			] + indent_block([
+				"if not currentGuide then",
+				"\tmaid:GiveTask(Guide.new())",
+				"end",
+				"return nil",
+			]) + [
 			"end",
 		"",
-		"return proxy"
+		"return ServiceProxy(function()",
+		"\treturn currentGuide or Guide",
+		"end)",
 	]
 
 	write_script(build_path, "\n".join(contents), packages_dir_zip_file_path=get_package_zip_path())
