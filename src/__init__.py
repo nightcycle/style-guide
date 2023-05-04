@@ -4,7 +4,7 @@ import src.config as config
 import src.build as build
 
 def main():
-	print(sys.argv)
+	# print(sys.argv)
 	if sys.argv[1] == "init":
 		config.init_config()
 	elif sys.argv[1] == "build":
