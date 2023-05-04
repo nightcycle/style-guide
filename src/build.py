@@ -10,9 +10,9 @@ import sys
 
 def get_package_zip_path() -> str:
 	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-	print(base_path)
-	for sub_path in os.listdir(base_path):
-		print(sub_path)
+	# print(base_path)
+	# for sub_path in os.listdir(base_path):
+	# 	print(sub_path)
 
 	return os.path.join(base_path, "data\\Packages.zip")
 
@@ -257,7 +257,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			"local Secondary = _Value(SECONDARY_DEFAULT_COLOR)",
 			"local Tertiary = _Value(TERTIARY_DEFAULT_COLOR)",
 			"local Background = _Value(BACKGROUND_DEFAULT_COLOR)",
-			"local IsDarkMode = _Value(true)",
+			f"local IsDarkMode = _Value({str(is_dark_mode).lower()})",
 			"local AbsoluteBackground = _Computed(function(background: Color3, isDarkMode: boolean)",
 			] + indent_block([
 				"local h, s, v = background:ToHSV()",
