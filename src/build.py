@@ -262,7 +262,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			] + indent_block([
 				"local h, s, v = background:ToHSV()",
 				"if isDarkMode then",
-					"background = Color3.fromHSV(h, s, 0.05 + 0.15 * v)",
+					"background = Color3.fromHSV(h, s, 0.025 + 0.025 * v)",
 				"end",
 				"return background"
 			]) + [
