@@ -257,6 +257,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			"local Secondary = _Value(SECONDARY_DEFAULT_COLOR)",
 			"local Tertiary = _Value(TERTIARY_DEFAULT_COLOR)",
 			"local Background = _Value(BACKGROUND_DEFAULT_COLOR)",
+			"local IsDarkMode = _Value(true)",
 			"local AbsoluteBackground = _Computed(function(background: Color3, isDarkMode: boolean)",
 			] + indent_block([
 				"local h, s, v = background:ToHSV()",
@@ -266,7 +267,6 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 				"return background"
 			]) + [
 			"end, Background, IsDarkMode)",
-			"local IsDarkMode = _Value(true)",
 			"",
 			"local ViewportSize = _Value(workspace.CurrentCamera.ViewportSize)",
 			"maid:GiveTask(RunService.RenderStepped:Connect(function()",
