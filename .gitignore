@@ -135,6 +135,5 @@ sourcemap.json
 wally.toml
 style.css
 reference.luau
-pseudo-enum.toml
 default.project.json
 Packages
