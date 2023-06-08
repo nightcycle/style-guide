@@ -498,7 +498,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 				"local state1 = pseudo1 :: any",
 				"local state2 = pseudo2 :: any",
 				"if typeof(state1) == \"string\" and typeof(state2) == \"string\" then",
-				"\treturn options[state1][state2]",
+				"\treturn options[state1 :: any][state2 :: any]",
 				"elseif typeof(state1) ~= \"string\" and typeof(state2) ~= \"string\" then",
 				] + indent_block([
 				"return ColdFusion.Computed(function(key1: T, key2: T): G",
