@@ -548,7 +548,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 						"end",
 						"return vals[state1][key2]",
 					]) + [
-					"end, state2)",
+					"end, state2) :: any",
 					]) + [
 				"end",
 				"error(\"Bad params\")",
