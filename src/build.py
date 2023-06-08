@@ -497,9 +497,9 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 			] + indent_block([
 				"local state1 = pseudo1 :: any",
 				"local state2 = pseudo2 :: any",
-				"if state1.EnumType ~= nil and state2.EnumType ~= nil then",
+				"if typeof(state1) == \"string\" and typeof(state2) == \"string\" then",
 				"\treturn options[state1][state2]",
-				"elseif state1.EnumType == nil and state2.EnumType == nil then",
+				"elseif typeof(state1) ~= \"string\" and typeof(state2) ~= \"string\" then",
 				] + indent_block([
 				"return ColdFusion.Computed(function(key1: T, key2: T): G",
 				] + indent_block([
@@ -516,7 +516,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 				]) + [
 				"end, state1, state2)",
 				]) + [
-				"elseif state1.EnumType == nil then",
+				"elseif typeof(state1) ~= \"string\" then",
 				] + indent_block([
 					"return ColdFusion.Computed(function(key1: T): G",
 					] + indent_block([
@@ -533,7 +533,7 @@ def main(build_path: str, is_dark_mode=False, rojo_path="defualt.project.json"):
 					]) + [
 					"end, state1)",
 				]) + [
-				"elseif state2.EnumType == nil then",
+				"elseif typeof(state2) ~= \"string\" then",
 				] + indent_block([
 					"return ColdFusion.Computed(function(key2: T): G",
 					] + indent_block([
